@@ -45,7 +45,7 @@
  *     </ons-toolbar>
  *
  *     <p style="text-align: center">
- *       <ons-button modifier="light" ng-click="app.navi.popPage('page.html');">Pop</ons-button>
+ *       <ons-button modifier="light" ng-click="app.navi.popPage();">Pop</ons-button>
  *     </p>
  *   </ons-page>
  * </ons-template>
@@ -179,11 +179,38 @@
 
 /**
  * @ngdoc attribute
+ * @name ons-init
+ * @type {Expression}
+ * @description
+ *  [en]Allows you to specify custom behavior when a page's "init" event is fired.[/en]
+ *  [ja]ページの"init"イベントが発火された時の挙動を独自に指定できます。[/ja]
+ */
+
+/**
+ * @ngdoc attribute
+ * @name ons-show
+ * @type {Expression}
+ * @description
+ *  [en]Allows you to specify custom behavior when a page's "show" event is fired.[/en]
+ *  [ja]ページの"show"イベントが発火された時の挙動を独自に指定できます。[/ja]
+ */
+
+/**
+ * @ngdoc attribute
+ * @name ons-hide
+ * @type {Expression}
+ * @description
+ *  [en]Allows you to specify custom behavior when a page's "hide" event is fired.[/en]
+ *  [ja]ページの"hide"イベントが発火された時の挙動を独自に指定できます。[/ja]
+ */
+
+/**
+ * @ngdoc attribute
  * @name ons-destroy
  * @type {Expression}
  * @description
- *  [en]Allows you to specify custom behavior when the "destroy" event is fired.[/en]
- *  [ja]"destroy"イベントが発火された時の挙動を独自に指定できます。[/ja]
+ *  [en]Allows you to specify custom behavior when a page's "destroy" event is fired.[/en]
+ *  [ja]ページの"destroy"イベントが発火された時の挙動を独自に指定できます。[/ja]
  */
 
 /**
@@ -226,6 +253,29 @@
  * @description
  *   [en]Pushes the specified pageUrl into the page stack.[/en]
  *   [ja]指定したpageUrlを新しいページスタックに追加します。新しいページが表示されます。[/ja]
+ */
+
+/**
+ * @ngdoc method
+ * @signature bringPageTop(item, [options])
+ * @param {String|Number} item
+ *   [en]Page URL or index of an existing page in navigator's stack.[/en]
+ *   [ja]ページのURLかもしくはons-navigatorのページスタックのインデックス値を指定します。[/ja]
+ * @param {Object} [options]
+ *   [en]Parameter object.[/en]
+ *   [ja]オプションを指定するオブジェクト。[/ja]
+ * @param {String} [options.animation]
+ *   [en]Animation name. Available animations are "slide", "simpleslide", "lift", "fade" and "none".[/en]
+ *   [ja]アニメーション名を指定します。"slide", "simpleslide", "lift", "fade", "none"のいずれかを指定できます。[/ja]
+ * @param {String} [options.animationOptions]
+ *   [en]Specify the animation's duration, delay and timing. E.g.  <code>{duration: 0.2, delay: 0.4, timing: 'ease-in'}</code>[/en]
+ *   [ja]アニメーション時のduration, delay, timingを指定します。e.g. <code>{duration: 0.2, delay: 0.4, timing: 'ease-in'}</code> [/ja]
+ * @param {Function} [options.onTransitionEnd]
+ *   [en]Function that is called when the transition has ended.[/en]
+ *   [ja]pushPage()による画面遷移が終了した時に呼び出される関数オブジェクトを指定します。[/ja]
+ * @description
+ *   [en]Brings the given page to the top of the page-stack if already exists or pushes it into the stack if doesn't.[/en]
+ *   [ja]指定したページをページスタックの一番上に移動します。もし指定したページが無かった場合新しくpushされます。[/ja]
  */
 
 /**
@@ -424,7 +474,7 @@
             var navigator = new NavigatorView(scope, element, attrs);
 
             $onsen.declareVarAttribute(attrs, navigator);
-            $onsen.registerEventHandlers(navigator, 'prepush prepop postpush postpop destroy');
+            $onsen.registerEventHandlers(navigator, 'prepush prepop postpush postpop init show hide destroy');
 
             element.data('ons-navigator', navigator);
 
